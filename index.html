@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            background: #0a0a0a;
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -85,6 +85,51 @@
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
         }
 
+        /* Sub Navigation Tabs */
+        .sub-nav {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 2px solid #333;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .sub-nav-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .sub-nav-item {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            color: #bbb;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .sub-nav-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .sub-nav-item.active {
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
         /* Back Button */
         .back-btn {
             position: fixed;
@@ -130,6 +175,23 @@
             position: relative;
             overflow: hidden;
             padding-top: 15vh;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23333" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(10px, 10px); }
         }
 
         .hero-content {
@@ -219,7 +281,7 @@
 
         /* Categories Section */
         .categories {
-            padding: 5rem 0;
+            padding: 3rem 0 5rem 0;
             max-width: 1200px;
             margin: 0 auto;
             background: rgba(0, 0, 0, 0.2);
@@ -251,24 +313,26 @@
         }
 
         .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
             padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .category-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 25px;
             overflow: hidden;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            backdrop-filter: blur(10px);
+            border: 2px solid #333;
             cursor: pointer;
-            height: 350px;
+            height: 500px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .category-card::before {
@@ -278,9 +342,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 165, 0, 0.1));
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 25px;
         }
 
         .category-card:hover::before {
@@ -288,22 +353,38 @@
         }
 
         .category-card:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
-            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.3);
+            border-color: #00d4ff;
+        }
+
+        .category-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+        }
+
+        .category-card:nth-child(even) .category-content {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .category-card:nth-child(even) .category-image {
+            order: 2;
+        }
+
+        .category-card:nth-child(even) .category-info {
+            order: 1;
         }
 
         .category-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(45deg, #1a1a1a, #333);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #00d4ff;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
         }
 
         .category-image img {
@@ -311,42 +392,74 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
+            border-radius: 0;
         }
 
         .category-card:hover .category-image img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .category-info {
-            padding: 1.5rem;
-            flex-grow: 1;
+            padding: 3rem;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            height: 100%;
         }
 
         .category-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
             color: #ffffff;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+
+        .category-title .highlight {
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
         }
 
         .category-description {
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            color: #bbb;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease;
+            line-height: 1.6;
+        }
+
+        .category-card:hover .category-description {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-count {
-            background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
             align-self: flex-start;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease 0.1s;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .category-card:hover .project-count {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Project Gallery */
@@ -514,6 +627,13 @@
             font-size: 1.1rem;
             border: 2px solid rgba(0, 212, 255, 0.2);
             box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
         }
 
         .about-text h2 {
@@ -696,8 +816,43 @@
                 font-size: 1.2rem;
             }
 
-            .categories-grid {
-                grid-template-columns: 1fr;
+            .category-card {
+                height: auto;
+            }
+
+            .category-content {
+                grid-template-columns: 1fr !important;
+            }
+
+            .category-card:nth-child(even) .category-image {
+                order: 1;
+            }
+
+            .category-card:nth-child(even) .category-info {
+                order: 2;
+            }
+
+            .category-image {
+                height: 300px;
+            }
+
+            .category-info {
+                padding: 2rem;
+            }
+
+            .category-title {
+                font-size: 2.5rem;
+            }
+
+            .category-description {
+                opacity: 1;
+                transform: translateY(0);
+                font-size: 1rem;
+            }
+
+            .project-count {
+                opacity: 1;
+                transform: translateY(0);
             }
 
             .project-grid {
@@ -711,6 +866,21 @@
 
             .about-image {
                 order: 2;
+            }
+
+            .sub-nav {
+                margin: 1rem auto;
+                padding: 0.8rem;
+                border-radius: 15px;
+            }
+
+            .sub-nav-container {
+                gap: 0.3rem;
+            }
+
+            .sub-nav-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
 
             .back-btn {
@@ -732,51 +902,9 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0f0f0f;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 1s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(0, 212, 255, 0.1);
-            border-top: 3px solid #00d4ff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader"></div>
-    </div>
-
-    <!-- 3D Canvas Background -->
-    <canvas id="three-canvas"></canvas>
-
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -788,6 +916,17 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Sub Navigation Tabs -->
+    <div class="sub-nav" id="subNav">
+        <div class="sub-nav-container">
+            <button class="sub-nav-item" onclick="showPage('interior')" data-page="interior">Interior Design</button>
+            <button class="sub-nav-item" onclick="showPage('interactive-tools')" data-page="interactive-tools">Interactive Tools</button>
+            <button class="sub-nav-item" onclick="showPage('product-animations')" data-page="product-animations">Product Animations</button>
+            <button class="sub-nav-item" onclick="showPage('vr-archviz')" data-page="vr-archviz">VR ArchViz</button>
+            <button class="sub-nav-item" onclick="showPage('gaming-assets')" data-page="gaming-assets">Gaming Assets</button>
+        </div>
+    </div>
 
     <!-- Back Button -->
     <button class="back-btn" onclick="showPage('home')" id="backBtn">← Back to Home</button>
@@ -807,59 +946,81 @@
         <!-- Categories Section -->
         <section class="categories" id="categories">
             <h2 class="section-title fade-in">Portfolio Categories</h2>
+            
+            <!-- Sub Navigation Tabs -->
+            <div class="sub-nav fade-in">
+                <div class="sub-nav-container">
+                    <button class="sub-nav-item active" onclick="scrollToCategory('interior-card')" data-category="interior-card">Interior Design</button>
+                    <button class="sub-nav-item" onclick="scrollToCategory('interactive-card')" data-category="interactive-card">Interactive Tools</button>
+                    <button class="sub-nav-item" onclick="scrollToCategory('product-card')" data-category="product-card">Product Animations</button>
+                    <button class="sub-nav-item" onclick="scrollToCategory('vr-card')" data-category="vr-card">VR ArchViz</button>
+                    <button class="sub-nav-item" onclick="scrollToCategory('gaming-card')" data-category="gaming-card">Gaming Assets</button>
+                </div>
+            </div>
+
             <div class="categories-grid">
-                <div class="category-card fade-in" onclick="showPage('interior')">
-                    <div class="category-image">
-                        <span>Interior Design</span>
-                    </div>
-                    <div class="category-info">
-                        <h3 class="category-title">Interior Design</h3>
-                        <p class="category-description">Stunning interior visualizations and room designs with photorealistic lighting and materials</p>
-                        <span class="project-count">3 Projects</span>
-                    </div>
-                </div>
-
-                <div class="category-card fade-in" onclick="showPage('interactive-tools')">
-                    <div class="category-image">
-                        <span>Interactive Tools</span>
-                    </div>
-                    <div class="category-info">
-                        <h3 class="category-title">Interactive Product Tools</h3>
-                        <p class="category-description">Web-based and standalone interactive 3D applications for product visualization and customization</p>
-                        <span class="project-count">3 Projects</span>
+                <div class="category-card fade-in" id="interior-card" onclick="showPage('interior')">
+                    <div class="category-content">
+                        <div class="category-info">
+                            <h3 class="category-title">BUILD YOUR <span class="highlight">INTERIOR</span></h3>
+                            <p class="category-description">Stunning interior visualizations and room designs with photorealistic lighting and materials. From modern apartments to luxurious spaces, creating immersive environments that bring architectural concepts to life.</p>
+                            <span class="project-count">3 Projects</span>
+                        </div>
+                        <div class="category-image">
+                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/8b4b95226649749.676b1b66b6b8a.jpg" alt="Interior Design" loading="lazy">
+                        </div>
                     </div>
                 </div>
 
-                <div class="category-card fade-in" onclick="showPage('product-animations')">
-                    <div class="category-image">
-                        <span>Product Animations</span>
-                    </div>
-                    <div class="category-info">
-                        <h3 class="category-title">Product Animations</h3>
-                        <p class="category-description">Dynamic product showcases and commercial animations with compelling visual storytelling</p>
-                        <span class="project-count">8 Projects</span>
-                    </div>
-                </div>
-
-                <div class="category-card fade-in" onclick="showPage('vr-archviz')">
-                    <div class="category-image">
-                        <span>VR ArchViz</span>
-                    </div>
-                    <div class="category-info">
-                        <h3 class="category-title">VR Interactive ArchViz</h3>
-                        <p class="category-description">Immersive VR experiences and interactive architectural walkthroughs</p>
-                        <span class="project-count">2 Projects</span>
+                <div class="category-card fade-in" id="interactive-card" onclick="showPage('interactive-tools')">
+                    <div class="category-content">
+                        <div class="category-info">
+                            <h3 class="category-title">CREATE <span class="highlight">INTERACTIVE</span> TOOLS</h3>
+                            <p class="category-description">Web-based and standalone interactive 3D applications for product visualization and customization. Revolutionary tools that allow real-time interaction and configuration of digital products.</p>
+                            <span class="project-count">3 Projects</span>
+                        </div>
+                        <div class="category-image">
+                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/38bb23225203159.67656e62b1b71.png" alt="Interactive Tools" loading="lazy">
+                        </div>
                     </div>
                 </div>
 
-                <div class="category-card fade-in" onclick="showPage('gaming-assets')">
-                    <div class="category-image">
-                        <span>Gaming Assets</span>
+                <div class="category-card fade-in" id="product-card" onclick="showPage('product-animations')">
+                    <div class="category-content">
+                        <div class="category-info">
+                            <h3 class="category-title">ANIMATE <span class="highlight">PRODUCTS</span></h3>
+                            <p class="category-description">Dynamic product showcases and commercial animations with compelling visual storytelling. From brand animations to automotive renders, creating captivating motion graphics that sell products.</p>
+                            <span class="project-count">8 Projects</span>
+                        </div>
+                        <div class="category-image">
+                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/23de6d226210667.676ad44b86513.png" alt="Product Animations" loading="lazy">
+                        </div>
                     </div>
-                    <div class="category-info">
-                        <h3 class="category-title">Gaming Assets</h3>
-                        <p class="category-description">Game-ready 3D models and assets optimized for real-time rendering</p>
-                        <span class="project-count">3 Projects</span>
+                </div>
+
+                <div class="category-card fade-in" id="vr-card" onclick="showPage('vr-archviz')">
+                    <div class="category-content">
+                        <div class="category-info">
+                            <h3 class="category-title">EXPERIENCE <span class="highlight">VR ARCHVIZ</span></h3>
+                            <p class="category-description">Immersive VR experiences and interactive architectural walkthroughs. Cutting-edge virtual reality solutions that allow clients to experience spaces before they're built.</p>
+                            <span class="project-count">2 Projects</span>
+                        </div>
+                        <div class="category-image">
+                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/dcc502218009301.67543cec1a7e2.png" alt="VR ArchViz" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card fade-in" id="gaming-card" onclick="showPage('gaming-assets')">
+                    <div class="category-content">
+                        <div class="category-info">
+                            <h3 class="category-title">CRAFT <span class="highlight">GAMING ASSETS</span></h3>
+                            <p class="category-description">Game-ready 3D models and assets optimized for real-time rendering. From weapons to furniture, creating high-quality assets that perform flawlessly in gaming environments.</p>
+                            <span class="project-count">3 Projects</span>
+                        </div>
+                        <div class="category-image">
+                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f23e14159099913.67c030ca52c05.png" alt="Gaming Assets" loading="lazy">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -883,4 +1044,534 @@
                             <span class="tag">ArchViz</span>
                             <span class="tag">Blender</span>
                         </div>
-                        <a href="https://www.behance.net/gallery/226649749/2
+                        <a href="https://www.behance.net/gallery/226649749/2bhk-interior-3d-design" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/199290625?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Unreal Engine Scene Project</h3>
+                        <p class="project-description">Real-time interior scene created in Unreal Engine with advanced lighting techniques and interactive elements for immersive visualization.</p>
+                        <div class="project-tags">
+                            <span class="tag">Unreal Engine</span>
+                            <span class="tag">Real-time</span>
+                            <span class="tag">Interactive</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/199290625/Unreal-Engine-Scene-Project" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/175908791?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Room Design</h3>
+                        <p class="project-description">Elegant room design showcasing modern interior aesthetics with careful attention to lighting, textures, and spatial composition.</p>
+                        <div class="project-tags">
+                            <span class="tag">Room Design</span>
+                            <span class="tag">Modern</span>
+                            <span class="tag">Visualization</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/175908791/Room-design" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Interactive Tools Page -->
+    <div class="page" id="interactive-tools">
+        <section class="project-gallery">
+            <h2 class="section-title">Interactive Product Tools</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/225203159?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D Fashion Tool (Web/Standalone)</h3>
+                        <p class="project-description">Interactive web-based 3D application for fashion design and visualization, allowing real-time customization and preview of clothing items.</p>
+                        <div class="project-tags">
+                            <span class="tag">Web Application</span>
+                            <span class="tag">Interactive</span>
+                            <span class="tag">Fashion</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/225203159/3D-Fashion-Tool-(WebStandalone)" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/217371289?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Medical Recliner 3D Interactive</h3>
+                        <p class="project-description">Interactive 3D model of medical equipment with detailed functionality showcase, allowing users to explore features and mechanisms in real-time.</p>
+                        <div class="project-tags">
+                            <span class="tag">Medical</span>
+                            <span class="tag">Interactive</span>
+                            <span class="tag">Product Design</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/217371289/Medical-Recliner-3D-interactive" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <span>LinkedIn Project</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D Fashion Tech Demo</h3>
+                        <p class="project-description">Advanced 3D fashion technology demonstration showcasing innovative approaches to digital clothing design and visualization.</p>
+                        <div class="project-tags">
+                            <span class="tag">Fashion Tech</span>
+                            <span class="tag">Demo</span>
+                            <span class="tag">Innovation</span>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/yashan-dahiya-a650a91b4_3ddesign-fashiontech-blender3d-activity-7324518540932263936-RLky?utm_source=share&utm_medium=member_desktop&rcm=ACoAADHY7K0BnwdzrUhQ1KC8X-7L8J3My0Ez8iE" target="_blank" class="external-link">View on LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Product Animations Page -->
+    <div class="page" id="product-animations">
+        <section class="project-gallery">
+            <h2 class="section-title">Product Animations</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/226210667?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Product Animation for BlazeUp</h3>
+                        <p class="project-description">Dynamic product animation showcasing brand identity through smooth motion graphics and compelling visual storytelling for marketing campaigns.</p>
+                        <div class="project-tags">
+                            <span class="tag">Product Animation</span>
+                            <span class="tag">Branding</span>
+                            <span class="tag">Motion Graphics</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/226210667/Product-animation-for-BlazeUp" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/199350355?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Uppercase Product Visualization</h3>
+                        <p class="project-description">High-end product renders with photorealistic materials and studio lighting setup, perfect for e-commerce and marketing applications.</p>
+                        <div class="project-tags">
+                            <span class="tag">Product Visualization</span>
+                            <span class="tag">Photorealistic</span>
+                            <span class="tag">Commercial</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/199350355/Uppercase-Product" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/212771043?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Uppercase Advertisement</h3>
+                        <p class="project-description">Professional advertisement animation featuring dynamic product presentation with compelling visual storytelling and brand-focused marketing approach.</p>
+                        <div class="project-tags">
+                            <span class="tag">Advertisement</span>
+                            <span class="tag">Product Animation</span>
+                            <span class="tag">Marketing</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/212771043/Uppercase-AD" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/212769669?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">4700BC Popcorn Advertisement</h3>
+                        <p class="project-description">Creative advertisement animation featuring dynamic product presentation with appealing visual effects and brand-focused storytelling.</p>
+                        <div class="project-tags">
+                            <span class="tag">Advertisement</span>
+                            <span class="tag">Animation</span>
+                            <span class="tag">Food Product</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/212769669/4700Bc-Popcorn-AD" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/199347053?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Slipper Animation</h3>
+                        <p class="project-description">Smooth product animation showcasing footwear design with detailed material work, dynamic camera movements, and appealing presentation for commercial use.</p>
+                        <div class="project-tags">
+                            <span class="tag">Product Animation</span>
+                            <span class="tag">Footwear</span>
+                            <span class="tag">Commercial</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/199347053/Slipper-animation" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/175908791?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Room Design Animation</h3>
+                        <p class="project-description">Animated walkthrough of interior space showcasing design elements and lighting transitions with smooth camera movements.</p>
+                        <div class="project-tags">
+                            <span class="tag">Interior Animation</span>
+                            <span class="tag">Walkthrough</span>
+                            <span class="tag">Design</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/175908791/Room-design" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/157617869?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">BMW X5 with Interior</h3>
+                        <p class="project-description">Detailed automotive visualization featuring both exterior and interior renders with photorealistic materials and professional lighting setup.</p>
+                        <div class="project-tags">
+                            <span class="tag">Automotive</span>
+                            <span class="tag">Car Rendering</span>
+                            <span class="tag">Interior</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/157617869/BMW-X-5-(With-interior)-rendered-file" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/199292597?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Cosmetic Jar</h3>
+                        <p class="project-description">High-end cosmetic product visualization with attention to material properties, reflections, and studio lighting for premium brand presentation.</p>
+                        <div class="project-tags">
+                            <span class="tag">Cosmetic</span>
+                            <span class="tag">Product Design</span>
+                            <span class="tag">Luxury</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/199292597/Cosmetic-jar" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- VR ArchViz Page -->
+    <div class="page" id="vr-archviz">
+        <section class="project-gallery">
+            <h2 class="section-title">VR Interactive ArchViz</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/218009301?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Interactive Interior Design Walkthrough</h3>
+                        <p class="project-description">Immersive interactive experience allowing users to explore and navigate through architectural spaces with real-time lighting and material interactions.</p>
+                        <div class="project-tags">
+                            <span class="tag">Interactive</span>
+                            <span class="tag">ArchViz</span>
+                            <span class="tag">Unreal Engine</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/218009301/Interactive-Interior-design-walkthrough" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/199346729?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Ongoing VR Projects</h3>
+                        <p class="project-description">Collection of virtual reality projects showcasing immersive architectural experiences with cutting-edge VR technology and interactive elements.</p>
+                        <div class="project-tags">
+                            <span class="tag">VR</span>
+                            <span class="tag">Architecture</span>
+                            <span class="tag">Immersive</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/199346729/Some-ongoing-VR-projects" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Gaming Assets Page -->
+    <div class="page" id="gaming-assets">
+        <section class="project-gallery">
+            <h2 class="section-title">Gaming Assets</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/159099913?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Flashbang (Game Ready)</h3>
+                        <p class="project-description">Game-ready 3D asset with optimized topology, detailed texturing using Substance Painter, and proper UV mapping for real-time rendering in gaming environments.</p>
+                        <div class="project-tags">
+                            <span class="tag">Gaming Assets</span>
+                            <span class="tag">Game Ready</span>
+                            <span class="tag">Substance Painter</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/159099913/Flashbang-(game-ready-)" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/158768097?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Sandberg Chair 3D Model</h3>
+                        <p class="project-description">Detailed 3D model created from scratch with precise geometry, realistic materials, and optimized for both real-time and high-quality rendering applications.</p>
+                        <div class="project-tags">
+                            <span class="tag">Furniture</span>
+                            <span class="tag">3D Modeling</span>
+                            <span class="tag">From Scratch</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/158768097/Sandberg-chair-3d-model(from-scratch)" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <iframe src="https://www.behance.net/embed/project/152713251?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Hot Rod</h3>
+                        <p class="project-description">Stylized automotive asset with detailed modeling and texturing, perfect for gaming environments and real-time applications with optimized performance.</p>
+                        <div class="project-tags">
+                            <span class="tag">Automotive</span>
+                            <span class="tag">Stylized</span>
+                            <span class="tag">Game Asset</span>
+                        </div>
+                        <a href="https://www.behance.net/gallery/152713251/HOT-ROD" target="_blank" class="external-link">View on Behance</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div class="page" id="about">
+        <section class="about">
+            <div class="about-container">
+                <div class="about-image fade-in">
+                    <span>Your Photo Here</span>
+                </div>
+                <div class="about-text fade-in">
+                    <h2>About Me</h2>
+                    <p>I'm a creative and detail-oriented 3D Artist with a passion for bringing ideas to life through digital artistry. I specialize in creating environment assets, character assets, object textures, product animation, and ArchViz using Blender3D and Unreal Engine.</p>
+                    <p>As a hard-working professional, I'm accustomed to performing well under pressure and completing all projects within schedule. I'm always looking for interesting opportunities in 3D Modeling and excited to collaborate on innovative projects that push creative boundaries.</p>
+                    <div class="skills">
+                        <span class="skill">Blender</span>
+                        <span class="skill">Unreal Engine</span>
+                        <span class="skill">3D Vista</span>
+                        <span class="skill">Adobe Photoshop</span>
+                        <span class="skill">Premiere Pro</span>
+                        <span class="skill">Substance Painter</span>
+                        <span class="skill">ArchViz</span>
+                        <span class="skill">Product Animation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page" id="contact">
+        <section class="contact">
+            <div class="contact-container">
+                <h2 class="section-title fade-in">Get In Touch</h2>
+                <form class="contact-form fade-in">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project">Project Type</label>
+                        <input type="text" id="project" name="project" placeholder="e.g., Product Animation, ArchViz, Gaming Assets">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://www.behance.net/yashandahiya" target="_blank">Behance</a>
+                <a href="https://www.linkedin.com/in/yashan-dahiya-a650a91b4" target="_blank">LinkedIn</a>
+                <a href="https://www.artstation.com/yashan_jeff" target="_blank">ArtStation</a>
+                <a href="mailto:dahiyayashan1999@gmail.com">Email</a>
+            </div>
+            <p>&copy; 2025 PolyYash. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation system
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Handle back button visibility
+            const backBtn = document.getElementById('backBtn');
+            const portfolioPages = ['interior', 'interactive-tools', 'product-animations', 'vr-archviz', 'gaming-assets'];
+            
+            if (pageId === 'home') {
+                backBtn.style.display = 'none';
+            } else {
+                backBtn.style.display = 'block';
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Trigger fade-in animations for new page
+            setTimeout(() => {
+                const fadeElements = document.querySelectorAll(`#${pageId} .fade-in`);
+                fadeElements.forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        }
+
+        // Scroll to specific category function
+        function scrollToCategory(categoryId) {
+            const categoryElement = document.getElementById(categoryId);
+            if (categoryElement) {
+                categoryElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Update active state in sub navigation
+                const subNavItems = document.querySelectorAll('.sub-nav-item');
+                subNavItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-category') === categoryId) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // Add temporary highlight effect to the category card
+                categoryElement.style.transform = 'translateY(-15px) scale(1.02)';
+                categoryElement.style.boxShadow = '0 30px 60px rgba(0, 212, 255, 0.6)';
+                categoryElement.style.borderColor = 'rgba(0, 212, 255, 0.8)';
+                
+                setTimeout(() => {
+                    categoryElement.style.transform = '';
+                    categoryElement.style.boxShadow = '';
+                    categoryElement.style.borderColor = '';
+                }, 2000);
+            }
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animation on scroll for home page
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('#home .fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const project = formData.get('project');
+            const message = formData.get('message');
+            
+            // Create mailto link
+            const subject = encodeURIComponent(`Project Inquiry: ${project || 'New Project'}`);
+            const body = encodeURIComponent(`Hi Yashan,\n\nName: ${name}\nEmail: ${email}\nProject Type: ${project}\n\nMessage:\n${message}\n\nBest regards,\n${name}`);
+            const mailtoLink = `mailto:dahiyayashan1999@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Open default email client
+            window.location.href = mailtoLink;
+            
+            // Show confirmation
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Opening Email Client...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Email client opened! Please send the email to get in touch.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
