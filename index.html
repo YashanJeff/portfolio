@@ -43,6 +43,23 @@
             border: 1px solid rgba(0, 212, 255, 0.2);
         }
 
+        /* Sticky Sub Navigation */
+        .sub-nav.sticky {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: transparent;
+            backdrop-filter: none;
+            z-index: 999;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+            padding: 0.8rem;
+            width: 80%;
+            max-width: 700px;
+        }
+
         .nav-container {
             max-width: none;
             margin: 0;
@@ -87,14 +104,24 @@
 
         /* Sub Navigation Tabs */
         .sub-nav {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(20px);
+            background: transparent;
+            backdrop-filter: none;
             border-radius: 20px;
             padding: 1rem;
-            border: 2px solid #333;
+            border: none;
             margin: 2rem auto;
             max-width: 800px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: none;
+        }
+
+        /* Hide any sub-nav that's not inside categories section */
+        .sub-nav:not(#categories .sub-nav) {
+            display: none !important;
+        }
+
+        /* Ensure only the categories sub-nav is visible */
+        #categories .sub-nav {
+            display: block;
         }
 
         .sub-nav-container {
@@ -284,11 +311,6 @@
             padding: 3rem 0 5rem 0;
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            margin-top: 2rem;
-            border: 1px solid rgba(0, 212, 255, 0.1);
         }
 
         .section-title {
@@ -1452,12 +1474,24 @@
             
             // Handle back button visibility
             const backBtn = document.getElementById('backBtn');
-            const portfolioPages = ['interior', 'interactive-tools', 'product-animations', 'vr-archviz', 'gaming-assets'];
             
             if (pageId === 'home') {
                 backBtn.style.display = 'none';
             } else {
                 backBtn.style.display = 'block';
+            }
+            
+            // Reset sub-nav active states when changing pages - only if on home page
+            if (pageId === 'home') {
+                const subNavItems = document.querySelectorAll('#categories .sub-nav-item');
+                subNavItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Set first item as active when returning to home
+                if (subNavItems.length > 0) {
+                    subNavItems[0].classList.add('active');
+                }
             }
             
             // Scroll to top
@@ -1475,6 +1509,7 @@
         // Scroll to specific category function
         function scrollToCategory(categoryId) {
             const categoryElement = document.getElementById(categoryId);
+            
             if (categoryElement) {
                 categoryElement.scrollIntoView({
                     behavior: 'smooth',
@@ -1482,7 +1517,7 @@
                 });
                 
                 // Update active state in sub navigation
-                const subNavItems = document.querySelectorAll('.sub-nav-item');
+                const subNavItems = document.querySelectorAll('#categories .sub-nav-item');
                 subNavItems.forEach(item => {
                     item.classList.remove('active');
                     if (item.getAttribute('data-category') === categoryId) {
@@ -1491,25 +1526,44 @@
                 });
                 
                 // Add temporary highlight effect to the category card
-                categoryElement.style.transform = 'translateY(-15px) scale(1.02)';
-                categoryElement.style.boxShadow = '0 30px 60px rgba(0, 212, 255, 0.6)';
-                categoryElement.style.borderColor = 'rgba(0, 212, 255, 0.8)';
-                
                 setTimeout(() => {
-                    categoryElement.style.transform = '';
-                    categoryElement.style.boxShadow = '';
-                    categoryElement.style.borderColor = '';
-                }, 2000);
+                    categoryElement.style.transform = 'translateY(-15px) scale(1.02)';
+                    categoryElement.style.boxShadow = '0 30px 60px rgba(0, 212, 255, 0.6)';
+                    categoryElement.style.borderColor = 'rgba(0, 212, 255, 0.8)';
+                    
+                    setTimeout(() => {
+                        categoryElement.style.transform = '';
+                        categoryElement.style.boxShadow = '';
+                        categoryElement.style.borderColor = '';
+                    }, 2000);
+                }, 200);
             }
         }
 
-        // Navbar scroll effect
+        // Navbar scroll effect and sticky sub-nav
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
+            const subNav = document.querySelector('.sub-nav');
+            const categoriesSection = document.getElementById('categories');
+            
+            // Regular navbar scroll effect
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+            
+            // Sticky sub-nav effect (only on home page)
+            if (document.getElementById('home').classList.contains('active') && categoriesSection && subNav) {
+                const categoriesRect = categoriesSection.getBoundingClientRect();
+                const subNavOriginalTop = categoriesSection.offsetTop + 120; // Approximate position of sub-nav in categories
+                
+                // If we've scrolled past where the sub-nav originally was, make it sticky
+                if (window.scrollY > subNavOriginalTop - 90) {
+                    subNav.classList.add('sticky');
+                } else {
+                    subNav.classList.remove('sticky');
+                }
             }
         });
 
